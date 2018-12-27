@@ -1,18 +1,44 @@
-%define		kdeappsver	17.08.2
-%define		qtver		5.3.2
+%define		kdeappsver	18.12.0
+%define		qtver		5.9.0
 %define		kaname		cantor
 Summary:	Cantor
 Name:		ka5-%{kaname}
-Version:	17.08.2
+Version:	18.12.0
 Release:	1
 License:	GPL v2+/LGPL v2.1+
 Group:		X11/Libraries
 Source0:	http://download.kde.org/stable/applications/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
-# Source0-md5:	b94d96c56c6e0622d8167e64ddf3902a
+# Source0-md5:	4d98ff2c425beb73935a5558fd3a4988
 URL:		http://www.kde.org/
 BuildRequires:	Qt5Core-devel >= %{qtver}
+BuildRequires:	Qt5Gui-devel
+BuildRequires:	Qt5Network-devel >= 5.11.1
+BuildRequires:	Qt5PrintSupport-devel
+BuildRequires:	Qt5Svg-devel
+BuildRequires:	Qt5Test-devel
+BuildRequires:	Qt5Widgets-devel
+BuildRequires:	Qt5Xml-devel
+BuildRequires:	Qt5XmlPatterns-devel
 BuildRequires:	cmake >= 2.8.12
-BuildRequires:	kf5-extra-cmake-modules >= 1.4.0
+BuildRequires:	gettext-devel
+BuildRequires:	kf5-extra-cmake-modules >= 5.53.0
+BuildRequires:	kf5-karchive-devel >= 5.49.0
+BuildRequires:	kf5-kcompletion-devel >= 5.49.0
+BuildRequires:	kf5-kconfig-devel >= 5.49.0
+BuildRequires:	kf5-kcoreaddons-devel >= 5.49.0
+BuildRequires:	kf5-kcrash-devel >= 5.49.0
+BuildRequires:	kf5-kdoctools-devel >= 5.49.0
+BuildRequires:	kf5-ki18n-devel >= 5.49.0
+BuildRequires:	kf5-kiconthemes-devel >= 5.49.0
+BuildRequires:	kf5-kio-devel >= 5.49.0
+BuildRequires:	kf5-knewstuff-devel >= 5.49.0
+BuildRequires:	kf5-kparts-devel >= 5.49.0
+BuildRequires:	kf5-kpty-devel >= 5.49.0
+BuildRequires:	kf5-ktexteditor-devel >= 5.49.0
+BuildRequires:	kf5-ktextwidgets-devel >= 5.49.0
+BuildRequires:	kf5-kxmlgui-devel >= 5.49.0
+BuildRequires:	kf5-syntax-highlighting-devel >= 5.49.0
+BuildRequires:	libqalculate-devel >= 2.8.2
 BuildRequires:	qt5-build >= %{qtver}
 BuildRequires:	rpmbuild(macros) >= 1.164
 BuildRequires:	shared-mime-info
@@ -87,11 +113,13 @@ rm -rf $RPM_BUILD_ROOT
 /etc/xdg/cantor_sage.knsrc
 /etc/xdg/cantor_scilab.knsrc
 %attr(755,root,root) %{_bindir}/cantor
+%attr(755,root,root) %{_bindir}/cantor_python2server
 %attr(755,root,root) %{_bindir}/cantor_python3server
 %attr(755,root,root) %{_bindir}/cantor_rserver
+%attr(755,root,root) %{_bindir}/cantor_scripteditor
 %attr(755,root,root) %{_libdir}/libcantor_config.so
 %attr(755,root,root) %{_libdir}/libcantor_pythonbackend.so
-%attr(755,root,root) %ghost %{_libdir}/libcantorlibs.so.17
+%attr(755,root,root) %ghost %{_libdir}/libcantorlibs.so.20
 %attr(755,root,root) %{_libdir}/libcantorlibs.so.*.*.*
 %dir %{_libdir}/qt5/plugins/cantor
 %dir %{_libdir}/qt5/plugins/cantor/assistants
@@ -156,6 +184,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/kxmlgui5/cantor/cantor_part.rc
 %{_datadir}/kxmlgui5/cantor/cantor_scripteditor.rc
 %{_datadir}/kxmlgui5/cantor/cantor_shell.rc
+%{_datadir}/kxmlgui5/cantor/cantor_advancedplot_assistant.rc
+%{_datadir}/kxmlgui5/cantor/cantor_create_matrix_assistant.rc
+%{_datadir}/kxmlgui5/cantor/cantor_differentiate_assistant.rc
+%{_datadir}/kxmlgui5/cantor/cantor_eigenvalues_assistant.rc
+%{_datadir}/kxmlgui5/cantor/cantor_eigenvectors_assistant.rc
+%{_datadir}/kxmlgui5/cantor/cantor_import_package_assistant.rc
+%{_datadir}/kxmlgui5/cantor/cantor_integrate_assistant.rc
+%{_datadir}/kxmlgui5/cantor/cantor_invert_matrix_assistant.rc
+%{_datadir}/kxmlgui5/cantor/cantor_plot2d_assistant.rc
+%{_datadir}/kxmlgui5/cantor/cantor_plot3d_assistant.rc
+%{_datadir}/kxmlgui5/cantor/cantor_qalculateplotassistant.rc
+%{_datadir}/kxmlgui5/cantor/cantor_runscript_assistant.rc
+%{_datadir}/kxmlgui5/cantor/cantor_solve_assistant.rc
 %{_datadir}/metainfo/org.kde.cantor.appdata.xml
 
 %files devel
