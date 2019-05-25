@@ -1,3 +1,11 @@
+#
+# Conditional build:
+%bcond_without	luajit		# build without luajit
+#
+%ifarch x32
+%undefine	with_luajit
+%endif
+
 %define		kdeappsver	19.04.1
 %define		kframever	5.56.0
 %define		qtver		5.9.0
@@ -20,8 +28,10 @@ BuildRequires:	Qt5Test-devel
 BuildRequires:	Qt5Widgets-devel
 BuildRequires:	Qt5Xml-devel
 BuildRequires:	Qt5XmlPatterns-devel
+BuildRequires:	R
 BuildRequires:	cmake >= 2.8.12
 BuildRequires:	gettext-devel
+BuildRequires:	ka5-analitza-devel
 BuildRequires:	kf5-extra-cmake-modules >= %{kframever}
 BuildRequires:	kf5-karchive-devel >= %{kframever}
 BuildRequires:	kf5-kcompletion-devel >= %{kframever}
@@ -41,7 +51,7 @@ BuildRequires:	kf5-kxmlgui-devel >= %{kframever}
 BuildRequires:	kf5-syntax-highlighting-devel >= %{kframever}
 BuildRequires:	libmarkdown-devel
 BuildRequires:	libqalculate-devel >= 2.8.2
-BuildRequires:	luajit-devel
+%{?with_luajit:BuildRequires:	luajit-devel}
 BuildRequires:	ninja
 BuildRequires:	qt5-build >= %{qtver}
 BuildRequires:	rpmbuild(macros) >= 1.164
@@ -58,7 +68,7 @@ own Computation Logic, but instead is built around different Backends.
 Available Backends
 - Julia Programming Language: http://julialang.org/
 - KAlgebra for Calculation and Plotting: http://edu.kde.org/kalgebra/
-- Lua Programming Language: http://lua.org/
+%{?with_luajit:- Lua Programming Language: http://lua.org/}
 - Maxima Computer Algebra System: http://maxima.sourceforge.net/
 - Octave for Numerical Computation: https://gnu.org/software/octave/
 - Python 2 Programming Language: http://python.org/
@@ -109,7 +119,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 /etc/xdg/cantor.knsrc
 /etc/xdg/cantor_kalgebra.knsrc
-/etc/xdg/cantor_lua.knsrc
+%{?with_luajit:/etc/xdg/cantor_lua.knsrc}
 /etc/xdg/cantor_maxima.knsrc
 /etc/xdg/cantor_octave.knsrc
 /etc/xdg/cantor_python2.knsrc
@@ -144,7 +154,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/assistants/cantor_solveassistant.so
 %dir %{_libdir}/qt5/plugins/cantor/backends
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_kalgebrabackend.so
-%attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_luabackend.so
+%{?with_luajit:%attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_luabackend.so}
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_maximabackend.so
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_nullbackend.so
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_octavebackend.so
@@ -178,7 +188,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/48x48/apps/cantor.png
 %{_iconsdir}/hicolor/48x48/apps/juliabackend.png
 %{_iconsdir}/hicolor/48x48/apps/kalgebrabackend.png
-%{_iconsdir}/hicolor/48x48/apps/luabackend.png
+%{?with_luajit:%{_iconsdir}/hicolor/48x48/apps/luabackend.png}
 %{_iconsdir}/hicolor/48x48/apps/maximabackend.png
 %{_iconsdir}/hicolor/48x48/apps/octavebackend.png
 %{_iconsdir}/hicolor/48x48/apps/pythonbackend.png
@@ -205,7 +215,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/kxmlgui5/cantor/cantor_runscript_assistant.rc
 %{_datadir}/kxmlgui5/cantor/cantor_solve_assistant.rc
 %{_datadir}/metainfo/org.kde.cantor.appdata.xml
-%{_datadir}/config.kcfg/luabackend.kcfg
+%{?with_luajit:%{_datadir}/config.kcfg/luabackend.kcfg}
 
 %files devel
 %defattr(644,root,root,755)
