@@ -19,6 +19,7 @@ Group:		X11/Libraries
 Source0:	http://download.kde.org/stable/applications/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
 # Source0-md5:	0a2d78da9b7a785adeddd1094e9bbe67
 Patch0:		python-3.8.patch
+Patch1:		qt5.15.patch
 URL:		http://www.kde.org/
 BuildRequires:	Qt5Core-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel
@@ -94,6 +95,10 @@ Pliki nagłówkowe dla programistów używających %{kaname}.
 %prep
 %setup -q -n %{kaname}-%{version}
 %patch0 -p1
+%patch1 -p1
+
+%{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+bash(\s|$),#!/bin/bash\1,' \
+      src/backends/sage/cantor-execsage
 
 %build
 install -d build

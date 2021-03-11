@@ -1,0 +1,12 @@
+diff -urN cantor-19.04.1/src/cantor.h cantor-19.08.3/src/cantor.h
+--- cantor-19.04.1/src/cantor.h	2019-05-02 22:14:10.000000000 +0200
++++ cantor-19.08.3/src/cantor.h	2019-11-01 22:50:43.000000000 +0100
+@@ -25,6 +25,8 @@
+ #include <KParts/MainWindow>
+ 
+ #include <QList>
++#include <QStringList>
++#include <QMap>
+ 
+ class QTabWidget;
+ class KTextEdit;
