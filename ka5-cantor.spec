@@ -6,20 +6,18 @@
 %undefine	with_luajit
 %endif
 
-%define		kdeappsver	19.04.1
+%define		kdeappsver	20.12.3
 %define		kframever	5.56.0
 %define		qtver		5.9.0
 %define		kaname		cantor
 Summary:	Cantor
 Name:		ka5-%{kaname}
-Version:	19.04.1
-Release:	4
+Version:	20.12.3
+Release:	1
 License:	GPL v2+/LGPL v2.1+
 Group:		X11/Libraries
-Source0:	http://download.kde.org/stable/applications/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
-# Source0-md5:	0a2d78da9b7a785adeddd1094e9bbe67
-Patch0:		python-3.8.patch
-Patch1:		qt5.15.patch
+Source0:	http://download.kde.org/stable/release-service/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
+# Source0-md5:	548c99084c5889f133bdf4c60f78554c
 URL:		http://www.kde.org/
 BuildRequires:	Qt5Core-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel
@@ -70,7 +68,7 @@ own Computation Logic, but instead is built around different Backends.
 Available Backends
 - Julia Programming Language: http://julialang.org/
 - KAlgebra for Calculation and Plotting: http://edu.kde.org/kalgebra/
-%{?with_luajit:- Lua Programming Language: http://lua.org/}
+  %{?with_luajit:- Lua Programming Language: http://lua.org/}
 - Maxima Computer Algebra System: http://maxima.sourceforge.net/
 - Octave for Numerical Computation: https://gnu.org/software/octave/
 - Python 2 Programming Language: http://python.org/
@@ -94,11 +92,6 @@ Pliki nagłówkowe dla programistów używających %{kaname}.
 
 %prep
 %setup -q -n %{kaname}-%{version}
-%patch0 -p1
-%patch1 -p1
-
-%{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+bash(\s|$),#!/bin/bash\1,' \
-      src/backends/sage/cantor-execsage
 
 %build
 install -d build
@@ -114,6 +107,8 @@ cd build
 rm -rf $RPM_BUILD_ROOT
 %ninja_install -C build
 
+sed -i -e 's#/usr/bin/env bash#/bin/bash#' $RPM_BUILD_ROOT%{_datadir}/cantor/sagebackend/cantor-execsage
+
 %find_lang %{kaname} --all-name --with-kde
 
 %clean
@@ -124,25 +119,29 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{kaname}.lang
 %defattr(644,root,root,755)
-/etc/xdg/cantor.knsrc
-/etc/xdg/cantor_kalgebra.knsrc
-%{?with_luajit:/etc/xdg/cantor_lua.knsrc}
-/etc/xdg/cantor_maxima.knsrc
-/etc/xdg/cantor_octave.knsrc
-/etc/xdg/cantor_python2.knsrc
-/etc/xdg/cantor_python3.knsrc
-/etc/xdg/cantor_qalculate.knsrc
-/etc/xdg/cantor_r.knsrc
-/etc/xdg/cantor_sage.knsrc
-/etc/xdg/cantor_scilab.knsrc
+%{?with_luajit:%{_datadir}/knsrcfiles/cantor_lua.knsrc}
+%attr(755,root,root) %{_bindir}/cantor_pythonserver
+%attr(755,root,root) %{_libdir}/cantor_pythonbackend.so
+%attr(755,root,root) %ghost %{_libdir}/libcantorlibs.so.28
+%attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_pythonbackend.so
+%attr(755,root,root) %{_libdir}/qt5/plugins/cantor/panels/cantor_filebrowserpanelplugin.so
+%attr(755,root,root) %{_libdir}/qt5/plugins/cantor/panels/cantor_tocpanelplugin.so
+%{_datadir}/cantor/octave/graphic_packages.xml
+%{_datadir}/cantor/python/graphic_packages.xml
+%{_datadir}/config.kcfg/pythonbackend.kcfg
+%{_datadir}/knsrcfiles/cantor.knsrc
+%{_datadir}/knsrcfiles/cantor_kalgebra.knsrc
+%{_datadir}/knsrcfiles/cantor_maxima.knsrc
+%{_datadir}/knsrcfiles/cantor_octave.knsrc
+%{_datadir}/knsrcfiles/cantor_python.knsrc
+%{_datadir}/knsrcfiles/cantor_qalculate.knsrc
+%{_datadir}/knsrcfiles/cantor_r.knsrc
+%{_datadir}/knsrcfiles/cantor_sage.knsrc
+%{_datadir}/knsrcfiles/cantor_scilab.knsrc
 %attr(755,root,root) %{_bindir}/cantor
-%attr(755,root,root) %{_bindir}/cantor_python2server
-%attr(755,root,root) %{_bindir}/cantor_python3server
 %attr(755,root,root) %{_bindir}/cantor_rserver
 %attr(755,root,root) %{_bindir}/cantor_scripteditor
 %attr(755,root,root) %{_libdir}/libcantor_config.so
-%attr(755,root,root) %{_libdir}/libcantor_pythonbackend.so
-%attr(755,root,root) %ghost %{_libdir}/libcantorlibs.so.20
 %attr(755,root,root) %{_libdir}/libcantorlibs.so.*.*.*
 %dir %{_libdir}/qt5/plugins/cantor
 %dir %{_libdir}/qt5/plugins/cantor/assistants
@@ -163,10 +162,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_kalgebrabackend.so
 %{?with_luajit:%attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_luabackend.so}
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_maximabackend.so
-%attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_nullbackend.so
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_octavebackend.so
-%attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_python2backend.so
-%attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_python3backend.so
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_qalculatebackend.so
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_rbackend.so
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_sagebackend.so
@@ -176,14 +172,20 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/panels/cantor_variablemanagerplugin.so
 %attr(755,root,root) %{_libdir}/qt5/plugins/libcantorpart.so
 %{_desktopdir}/org.kde.cantor.desktop
-%{_datadir}/cantor
+%dir %{_datadir}/cantor
+%dir %{_datadir}/cantor/sagebackend
+%attr(755,root,root) %{_datadir}/cantor/sagebackend/cantor-execsage
+%{_datadir}/cantor/latex
+%{_datadir}/cantor/maximabackend
+%{_datadir}/cantor/octavebackend
+%dir %{_datadir}/cantor/octave
+%dir %{_datadir}/cantor/python
+%{_datadir}/cantor/xslt
 %{_datadir}/config.kcfg/cantor.kcfg
 %{_datadir}/config.kcfg/cantor_libs.kcfg
 %{_datadir}/config.kcfg/kalgebrabackend.kcfg
 %{_datadir}/config.kcfg/maximabackend.kcfg
 %{_datadir}/config.kcfg/octavebackend.kcfg
-%{_datadir}/config.kcfg/python2backend.kcfg
-%{_datadir}/config.kcfg/python3backend.kcfg
 %{_datadir}/config.kcfg/qalculatebackend.kcfg
 %{_datadir}/config.kcfg/rserver.kcfg
 %{_datadir}/config.kcfg/sagebackend.kcfg
