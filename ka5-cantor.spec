@@ -6,18 +6,18 @@
 %undefine	with_luajit
 %endif
 
-%define		kdeappsver	20.12.3
+%define		kdeappsver	21.04.0
 %define		kframever	5.56.0
 %define		qtver		5.9.0
 %define		kaname		cantor
 Summary:	Cantor
 Name:		ka5-%{kaname}
-Version:	20.12.3
+Version:	21.04.0
 Release:	1
 License:	GPL v2+/LGPL v2.1+
 Group:		X11/Libraries
 Source0:	http://download.kde.org/stable/release-service/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
-# Source0-md5:	548c99084c5889f133bdf4c60f78554c
+# Source0-md5:	edbc7d0600041260f9d3fdec3aef1437
 URL:		http://www.kde.org/
 BuildRequires:	Qt5Core-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel
@@ -122,7 +122,7 @@ rm -rf $RPM_BUILD_ROOT
 %{?with_luajit:%{_datadir}/knsrcfiles/cantor_lua.knsrc}
 %attr(755,root,root) %{_bindir}/cantor_pythonserver
 %attr(755,root,root) %{_libdir}/cantor_pythonbackend.so
-%attr(755,root,root) %ghost %{_libdir}/libcantorlibs.so.28
+%ghost %{_libdir}/libcantorlibs.so.28
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/backends/cantor_pythonbackend.so
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/panels/cantor_filebrowserpanelplugin.so
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/panels/cantor_tocpanelplugin.so
@@ -225,9 +225,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/kxmlgui5/cantor/cantor_solve_assistant.rc
 %{_datadir}/metainfo/org.kde.cantor.appdata.xml
 %{?with_luajit:%{_datadir}/config.kcfg/luabackend.kcfg}
+%{_datadir}/mime/packages/cantor.xml
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/cantor
-%attr(755,root,root) %{_libdir}/libcantorlibs.so
+%{_libdir}/libcantorlibs.so
 %{_libdir}/cmake/Cantor
