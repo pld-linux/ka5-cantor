@@ -78,6 +78,23 @@ Available Backends
 - Sage Mathematics Software: http://sagemath.org/
 - Scilab for Numerical Computation: http://scilab.org/
 
+%description -l pl.UTF-8
+Cantor jest programem KDE, którego celem jest dostarczenie miłego interfejsu
+do obliczeń naukowych. Cantor nie implementuje własnej logiki obliczeń,
+zamiast tego jest zbudowany wokół różnych backendów.
+
+Dostępne backendy:
+- język programowania Julia: http://julialang.org/
+- KAlgebra do obliczeń i rysowania: http://edu.kde.org/kalgebra/
+%{?with_luajit:- język Lua: http://lua.org/}
+- system komputerowej algebry Maxima: http://maxima.sourceforge.net/
+- Octave do obliczeń numerycznych: https://gnu.org/software/octave/
+- język Python 3: http://python.org/
+- kalkulator biurkowy Qalculate: http://qalculate.sourceforge.net/
+- projekt R do obliczeń statystycznych: http://r-project.org/
+- oprogramowanie matematyczne Sage: http://sagemath.org/
+- Scilab do obliczeń numerycznych: http://scilab.org/
+
 %package devel
 Summary:	Header files for %{kaname} development
 Summary(pl.UTF-8):	Pliki nagłówkowe dla programistów używających %{kpname}
