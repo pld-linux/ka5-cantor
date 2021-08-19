@@ -6,18 +6,18 @@
 %undefine	with_luajit
 %endif
 
-%define		kdeappsver	21.04.3
+%define		kdeappsver	21.08.0
 %define		kframever	5.56.0
 %define		qtver		5.9.0
 %define		kaname		cantor
 Summary:	Cantor
 Name:		ka5-%{kaname}
-Version:	21.04.3
+Version:	21.08.0
 Release:	1
 License:	GPL v2+/LGPL v2.1+
 Group:		X11/Libraries
 Source0:	http://download.kde.org/stable/release-service/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
-# Source0-md5:	4f8e20e7e14ffb9917151144db9bfef6
+# Source0-md5:	810e0db92838b20e30e37799f8377640
 URL:		http://www.kde.org/
 BuildRequires:	Qt5Core-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel
@@ -79,14 +79,14 @@ Available Backends
 - Scilab for Numerical Computation: http://scilab.org/
 
 %description -l pl.UTF-8
-Cantor jest programem KDE, którego celem jest dostarczenie miłego interfejsu
-do obliczeń naukowych. Cantor nie implementuje własnej logiki obliczeń,
-zamiast tego jest zbudowany wokół różnych backendów.
+Cantor jest programem KDE, którego celem jest dostarczenie miłego
+interfejsu do obliczeń naukowych. Cantor nie implementuje własnej
+logiki obliczeń, zamiast tego jest zbudowany wokół różnych backendów.
 
 Dostępne backendy:
 - język programowania Julia: http://julialang.org/
 - KAlgebra do obliczeń i rysowania: http://edu.kde.org/kalgebra/
-%{?with_luajit:- język Lua: http://lua.org/}
+  %{?with_luajit:- język Lua: http://lua.org/}
 - system komputerowej algebry Maxima: http://maxima.sourceforge.net/
 - Octave do obliczeń numerycznych: https://gnu.org/software/octave/
 - język Python 3: http://python.org/
@@ -187,7 +187,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/qt5/plugins/cantor/panels
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/panels/cantor_helppanelplugin.so
 %attr(755,root,root) %{_libdir}/qt5/plugins/cantor/panels/cantor_variablemanagerplugin.so
-%attr(755,root,root) %{_libdir}/qt5/plugins/libcantorpart.so
 %{_desktopdir}/org.kde.cantor.desktop
 %dir %{_datadir}/cantor
 %dir %{_datadir}/cantor/sagebackend
@@ -202,7 +201,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config.kcfg/cantor_libs.kcfg
 %{_datadir}/config.kcfg/kalgebrabackend.kcfg
 %{_datadir}/config.kcfg/maximabackend.kcfg
-%{_datadir}/config.kcfg/octavebackend.kcfg
 %{_datadir}/config.kcfg/qalculatebackend.kcfg
 %{_datadir}/config.kcfg/rserver.kcfg
 %{_datadir}/config.kcfg/sagebackend.kcfg
@@ -243,6 +241,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/metainfo/org.kde.cantor.appdata.xml
 %{?with_luajit:%{_datadir}/config.kcfg/luabackend.kcfg}
 %{_datadir}/mime/packages/cantor.xml
+%{_libdir}/qt5/plugins/cantor/panels/cantor_documentationpanelplugin.so
+%{_libdir}/qt5/plugins/kf5/parts/cantorpart.so
+%{_datadir}/config.kcfg/octavebackend.kcfg.in
+%{_datadir}/knsrcfiles/cantor-documentation.knsrc
 
 %files devel
 %defattr(644,root,root,755)
