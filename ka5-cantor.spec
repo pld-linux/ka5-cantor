@@ -6,18 +6,18 @@
 %undefine	with_luajit
 %endif
 
-%define		kdeappsver	21.08.0
+%define		kdeappsver	21.08.1
 %define		kframever	5.56.0
 %define		qtver		5.9.0
 %define		kaname		cantor
 Summary:	Cantor
 Name:		ka5-%{kaname}
-Version:	21.08.0
-Release:	3
+Version:	21.08.1
+Release:	1
 License:	GPL v2+/LGPL v2.1+
 Group:		X11/Libraries
 Source0:	https://download.kde.org/stable/release-service/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
-# Source0-md5:	810e0db92838b20e30e37799f8377640
+# Source0-md5:	55f43b7515b3b2a0daa24f894c7b2b26
 URL:		https://www.kde.org/
 BuildRequires:	Qt5Core-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel
