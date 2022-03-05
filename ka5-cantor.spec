@@ -55,6 +55,7 @@ BuildRequires:	libmarkdown-devel
 BuildRequires:	libqalculate-devel >= 2.8.2
 %{?with_luajit:BuildRequires:	luajit-devel}
 BuildRequires:	ninja
+BuildRequires:	poppler-qt5-devel
 BuildRequires:	qt5-assistant
 BuildRequires:	qt5-build >= %{qtver}
 BuildRequires:	rpmbuild(macros) >= 1.164
