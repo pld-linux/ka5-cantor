@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_without	luajit		# build without luajit
+%bcond_with	tests		# build with tests
 #
 %ifarch x32
 %undefine	with_luajit
@@ -120,10 +121,16 @@ install -d build
 cd build
 %cmake \
 	-G Ninja \
+	%{!?with_tests:-DBUILD_TESTING=OFF} \
 	-DHTML_INSTALL_DIR=%{_kdedocdir} \
 	-DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
 	..
 %ninja_build
+
+%if %{with tests}
+ctest
+%endif
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
