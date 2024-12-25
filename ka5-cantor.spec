@@ -14,11 +14,12 @@
 Summary:	Cantor
 Name:		ka5-%{kaname}
 Version:	23.08.5
-Release:	3
+Release:	4
 License:	GPL v2+/LGPL v2.1+
 Group:		X11/Libraries
 Source0:	https://download.kde.org/stable/release-service/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
 # Source0-md5:	b2579f3ac8b0618ebd14b21d3c1342a1
+Patch0:		luajit-5.2.patch
 URL:		https://www.kde.org/
 BuildRequires:	Qt5Core-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel
@@ -115,6 +116,7 @@ Pliki nagłówkowe dla programistów używających %{kaname}.
 
 %prep
 %setup -q -n %{kaname}-%{version}
+%patch -P 0 -p1
 
 %build
 %cmake \
